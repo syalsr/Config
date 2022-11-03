@@ -5,7 +5,6 @@ import (
 	"Config/app/database"
 	"Config/app/server"
 	"context"
-	"fmt"
 	"log"
 	"sync"
 
@@ -30,8 +29,8 @@ func main() {
 }
 
 func init() {
-	err := godotenv.Load("/app/.env")
-	fmt.Println(*config.GetConfig())
+	//err := godotenv.Load("/app/.env")
+	err := godotenv.Load("../../.env")
 	if err != nil {
 		log.Fatal(err)
 	}

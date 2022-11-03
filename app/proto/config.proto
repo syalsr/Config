@@ -36,6 +36,12 @@ service ConfigWrapper{
       body : "config"
     };
   };
+  rpc Update (Config) returns (Service) {
+    option (google.api.http) = {
+      post : "/config"
+      body : "config"
+    };
+  };
   rpc Delete (Service) returns (Service) {
     option (google.api.http) = {
       delete : "/config"

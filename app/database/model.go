@@ -1,11 +1,12 @@
 package database
 
 type Config struct{
-	key1 string	`json: key1`
-	key2 string	`json: key2`
+	Key1 string	`json:"key1"`
+	Key2 string	`json:"key2"`
 }
 
 type Request struct{
-	version int	`json: version`
-	config Config
+	Service string 	`json:"service"`
+	Version int		`json:"version"`
+	Config []byte	`json:"config"`
 }

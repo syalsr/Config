@@ -18,7 +18,8 @@ var once sync.Once
 
 func GetConfig() *StorageConfig {
 	once.Do(func() {
-		instance = &StorageConfig{Host: os.Getenv("host"),
+		instance = &StorageConfig{
+			Host:     os.Getenv("host"),
 			Port:     os.Getenv("port"),
 			Database: os.Getenv("database"),
 			Username: os.Getenv("user"),
