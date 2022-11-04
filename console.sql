@@ -1,5 +1,9 @@
-select service.service_id, service.service, config.version, config.cfg from service
-INNER JOIN config ON service.service_id = config.service_id
-WHERE "service" = 'managed-k8snsk1ss'
-ORDER BY version DESC
-LIMIT 1
+SELECT 
+		service.service, config.version, config.cfg, service.service_id 
+	FROM service
+	INNER JOIN 
+		config ON service.service_id = config.service_id
+		AND
+		config.version = (SELECT MAX(config.version) FROM config
+			WHERE config.service_id = (SELECT service_id FROM service
+					WHERE "service" = $1))

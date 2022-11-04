@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 )
 
 
@@ -23,9 +24,12 @@ func (receiver *ConfigWrapper) Get(ctx context.Context, in *proto.Service) (*pro
 	FROM service
 	INNER JOIN 
 		config ON service.service_id = config.service_id
-	WHERE "service" = $1
-	ORDER BY version DESC
-	LIMIT 1
+		AND
+		config.version = (SELECT config.version FROM config
+			WHERE config.service_id = (SELECT service_id FROM service
+					WHERE "service" = $1))
+        AND
+            service.service = $1
 	`
 	result := &database.Request{}
 	fmt.Println(in.GetService())
@@ -33,7 +37,10 @@ func (receiver *ConfigWrapper) Get(ctx context.Context, in *proto.Service) (*pro
 	if err != nil {
 		return nil, err
 	}
-	
+	fmt.Println(result)
+
+	log.Printf("Get config for %s", in.GetService())
+
 	return nil, nil
 }
 func (receiver *ConfigWrapper) Create(ctx context.Context, in *proto.Config) (*proto.Service, error) {
@@ -67,9 +74,17 @@ func (receiver *ConfigWrapper) Create(ctx context.Context, in *proto.Config) (*p
 	}
 	conn.QueryRow(ctx, insertConfig, serviceID, 1, jsonCFG)
 	
+	log.Printf("Create config for %s", in.Config.Service)
+
 	return &proto.Service{Service: in.Config.Service}, nil
 }
 
 func (receiver *ConfigWrapper) Delete(context.Context, *proto.Service) (*proto.Service, error) {
+	return nil, nil
+}
+
+func (receiver *ConfigWrapper) Update(context.Context, *proto.Service) (*proto.Service, error) {
+	
+
 	return nil, nil
 }

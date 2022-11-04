@@ -22,8 +22,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ConfigWrapperClient interface {
-	Get(ctx context.Context, in *Service, opts ...grpc.CallOption) (*Data, error)
+	Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
 	Create(ctx context.Context, in *Config, opts ...grpc.CallOption) (*Service, error)
+	Update(ctx context.Context, in *Config, opts ...grpc.CallOption) (*Service, error)
 	Delete(ctx context.Context, in *Service, opts ...grpc.CallOption) (*Service, error)
 }
 
@@ -35,8 +36,8 @@ func NewConfigWrapperClient(cc grpc.ClientConnInterface) ConfigWrapperClient {
 	return &configWrapperClient{cc}
 }
 
-func (c *configWrapperClient) Get(ctx context.Context, in *Service, opts ...grpc.CallOption) (*Data, error) {
-	out := new(Data)
+func (c *configWrapperClient) Get(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	out := new(GetResponse)
 	err := c.cc.Invoke(ctx, "/proto.ConfigWrapper/Get", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -47,6 +48,15 @@ func (c *configWrapperClient) Get(ctx context.Context, in *Service, opts ...grpc
 func (c *configWrapperClient) Create(ctx context.Context, in *Config, opts ...grpc.CallOption) (*Service, error) {
 	out := new(Service)
 	err := c.cc.Invoke(ctx, "/proto.ConfigWrapper/Create", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *configWrapperClient) Update(ctx context.Context, in *Config, opts ...grpc.CallOption) (*Service, error) {
+	out := new(Service)
+	err := c.cc.Invoke(ctx, "/proto.ConfigWrapper/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -66,8 +76,9 @@ func (c *configWrapperClient) Delete(ctx context.Context, in *Service, opts ...g
 // All implementations must embed UnimplementedConfigWrapperServer
 // for forward compatibility
 type ConfigWrapperServer interface {
-	Get(context.Context, *Service) (*Data, error)
+	Get(context.Context, *GetRequest) (*GetResponse, error)
 	Create(context.Context, *Config) (*Service, error)
+	Update(context.Context, *Config) (*Service, error)
 	Delete(context.Context, *Service) (*Service, error)
 	mustEmbedUnimplementedConfigWrapperServer()
 }
@@ -76,11 +87,14 @@ type ConfigWrapperServer interface {
 type UnimplementedConfigWrapperServer struct {
 }
 
-func (UnimplementedConfigWrapperServer) Get(context.Context, *Service) (*Data, error) {
+func (UnimplementedConfigWrapperServer) Get(context.Context, *GetRequest) (*GetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
 }
 func (UnimplementedConfigWrapperServer) Create(context.Context, *Config) (*Service, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedConfigWrapperServer) Update(context.Context, *Config) (*Service, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
 func (UnimplementedConfigWrapperServer) Delete(context.Context, *Service) (*Service, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
@@ -99,7 +113,7 @@ func RegisterConfigWrapperServer(s grpc.ServiceRegistrar, srv ConfigWrapperServe
 }
 
 func _ConfigWrapper_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Service)
+	in := new(GetRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -111,7 +125,7 @@ func _ConfigWrapper_Get_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: "/proto.ConfigWrapper/Get",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ConfigWrapperServer).Get(ctx, req.(*Service))
+		return srv.(ConfigWrapperServer).Get(ctx, req.(*GetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -130,6 +144,24 @@ func _ConfigWrapper_Create_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ConfigWrapperServer).Create(ctx, req.(*Config))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ConfigWrapper_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Config)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ConfigWrapperServer).Update(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/proto.ConfigWrapper/Update",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ConfigWrapperServer).Update(ctx, req.(*Config))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -166,6 +198,10 @@ var ConfigWrapper_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Create",
 			Handler:    _ConfigWrapper_Create_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _ConfigWrapper_Update_Handler,
 		},
 		{
 			MethodName: "Delete",
