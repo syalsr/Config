@@ -8,5 +8,6 @@ type Config struct{
 type Request struct{
 	Service string 	`json:"service"`
 	Version int		`json:"version"`
+	ServiceID int	`json:"service_id"`
 	Config []byte	`json:"config"`
 }

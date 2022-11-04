@@ -32,43 +32,43 @@ var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
 var (
-	filter_ConfigWrapper_Get_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_ConfigWrapper_GetConfig_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_ConfigWrapper_Get_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigWrapperClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_ConfigWrapper_GetConfig_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigWrapperClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigWrapper_Get_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigWrapper_GetConfig_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.Get(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetConfig(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_ConfigWrapper_Get_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigWrapperServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_ConfigWrapper_GetConfig_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigWrapperServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq GetRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigWrapper_Get_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigWrapper_GetConfig_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.Get(ctx, &protoReq)
+	msg, err := server.GetConfig(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_ConfigWrapper_Create_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigWrapperClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Config
+func request_ConfigWrapper_CreateConfig_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigWrapperClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -79,13 +79,13 @@ func request_ConfigWrapper_Create_0(ctx context.Context, marshaler runtime.Marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.Create(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.CreateConfig(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_ConfigWrapper_Create_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigWrapperServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Config
+func local_request_ConfigWrapper_CreateConfig_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigWrapperServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -96,13 +96,13 @@ func local_request_ConfigWrapper_Create_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.Create(ctx, &protoReq)
+	msg, err := server.CreateConfig(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
-func request_ConfigWrapper_Update_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigWrapperClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Config
+func request_ConfigWrapper_UpdateConfig_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigWrapperClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -113,13 +113,13 @@ func request_ConfigWrapper_Update_0(ctx context.Context, marshaler runtime.Marsh
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.Update(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.UpdateConfig(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_ConfigWrapper_Update_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigWrapperServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Config
+func local_request_ConfigWrapper_UpdateConfig_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigWrapperServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq CreateRequest
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
@@ -130,43 +130,43 @@ func local_request_ConfigWrapper_Update_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.Update(ctx, &protoReq)
+	msg, err := server.UpdateConfig(ctx, &protoReq)
 	return msg, metadata, err
 
 }
 
 var (
-	filter_ConfigWrapper_Delete_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_ConfigWrapper_DeleteUnusedConfig_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_ConfigWrapper_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigWrapperClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Service
+func request_ConfigWrapper_DeleteUnusedConfig_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigWrapperClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigWrapper_Delete_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigWrapper_DeleteUnusedConfig_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.DeleteUnusedConfig(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_ConfigWrapper_Delete_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigWrapperServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq Service
+func local_request_ConfigWrapper_DeleteUnusedConfig_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigWrapperServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigWrapper_Delete_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_ConfigWrapper_DeleteUnusedConfig_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	msg, err := server.Delete(ctx, &protoReq)
+	msg, err := server.DeleteUnusedConfig(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -177,7 +177,7 @@ func local_request_ConfigWrapper_Delete_0(ctx context.Context, marshaler runtime
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterConfigWrapperHandlerFromEndpoint instead.
 func RegisterConfigWrapperHandlerServer(ctx context.Context, mux *runtime.ServeMux, server ConfigWrapperServer) error {
 
-	mux.Handle("GET", pattern_ConfigWrapper_Get_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ConfigWrapper_GetConfig_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -185,12 +185,12 @@ func RegisterConfigWrapperHandlerServer(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.ConfigWrapper/Get", runtime.WithHTTPPathPattern("/config"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.ConfigWrapper/GetConfig", runtime.WithHTTPPathPattern("/config"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ConfigWrapper_Get_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ConfigWrapper_GetConfig_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -198,11 +198,11 @@ func RegisterConfigWrapperHandlerServer(ctx context.Context, mux *runtime.ServeM
 			return
 		}
 
-		forward_ConfigWrapper_Get_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigWrapper_GetConfig_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ConfigWrapper_Create_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ConfigWrapper_CreateConfig_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -210,12 +210,12 @@ func RegisterConfigWrapperHandlerServer(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.ConfigWrapper/Create", runtime.WithHTTPPathPattern("/config"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.ConfigWrapper/CreateConfig", runtime.WithHTTPPathPattern("/config"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ConfigWrapper_Create_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ConfigWrapper_CreateConfig_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -223,11 +223,11 @@ func RegisterConfigWrapperHandlerServer(ctx context.Context, mux *runtime.ServeM
 			return
 		}
 
-		forward_ConfigWrapper_Create_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigWrapper_CreateConfig_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_ConfigWrapper_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_ConfigWrapper_UpdateConfig_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -235,12 +235,12 @@ func RegisterConfigWrapperHandlerServer(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.ConfigWrapper/Update", runtime.WithHTTPPathPattern("/config"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.ConfigWrapper/UpdateConfig", runtime.WithHTTPPathPattern("/config"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ConfigWrapper_Update_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ConfigWrapper_UpdateConfig_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -248,11 +248,11 @@ func RegisterConfigWrapperHandlerServer(ctx context.Context, mux *runtime.ServeM
 			return
 		}
 
-		forward_ConfigWrapper_Update_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigWrapper_UpdateConfig_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_ConfigWrapper_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_ConfigWrapper_DeleteUnusedConfig_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -260,12 +260,12 @@ func RegisterConfigWrapperHandlerServer(ctx context.Context, mux *runtime.ServeM
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.ConfigWrapper/Delete", runtime.WithHTTPPathPattern("/config"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/proto.ConfigWrapper/DeleteUnusedConfig", runtime.WithHTTPPathPattern("/config"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ConfigWrapper_Delete_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ConfigWrapper_DeleteUnusedConfig_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -273,7 +273,7 @@ func RegisterConfigWrapperHandlerServer(ctx context.Context, mux *runtime.ServeM
 			return
 		}
 
-		forward_ConfigWrapper_Delete_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigWrapper_DeleteUnusedConfig_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -318,91 +318,91 @@ func RegisterConfigWrapperHandler(ctx context.Context, mux *runtime.ServeMux, co
 // "ConfigWrapperClient" to call the correct interceptors.
 func RegisterConfigWrapperHandlerClient(ctx context.Context, mux *runtime.ServeMux, client ConfigWrapperClient) error {
 
-	mux.Handle("GET", pattern_ConfigWrapper_Get_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_ConfigWrapper_GetConfig_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.ConfigWrapper/Get", runtime.WithHTTPPathPattern("/config"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.ConfigWrapper/GetConfig", runtime.WithHTTPPathPattern("/config"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ConfigWrapper_Get_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ConfigWrapper_GetConfig_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ConfigWrapper_Get_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigWrapper_GetConfig_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_ConfigWrapper_Create_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_ConfigWrapper_CreateConfig_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.ConfigWrapper/Create", runtime.WithHTTPPathPattern("/config"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.ConfigWrapper/CreateConfig", runtime.WithHTTPPathPattern("/config"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ConfigWrapper_Create_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ConfigWrapper_CreateConfig_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ConfigWrapper_Create_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigWrapper_CreateConfig_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PATCH", pattern_ConfigWrapper_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PATCH", pattern_ConfigWrapper_UpdateConfig_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.ConfigWrapper/Update", runtime.WithHTTPPathPattern("/config"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.ConfigWrapper/UpdateConfig", runtime.WithHTTPPathPattern("/config"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ConfigWrapper_Update_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ConfigWrapper_UpdateConfig_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ConfigWrapper_Update_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigWrapper_UpdateConfig_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_ConfigWrapper_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_ConfigWrapper_DeleteUnusedConfig_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.ConfigWrapper/Delete", runtime.WithHTTPPathPattern("/config"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/proto.ConfigWrapper/DeleteUnusedConfig", runtime.WithHTTPPathPattern("/config"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ConfigWrapper_Delete_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ConfigWrapper_DeleteUnusedConfig_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_ConfigWrapper_Delete_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_ConfigWrapper_DeleteUnusedConfig_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -410,21 +410,21 @@ func RegisterConfigWrapperHandlerClient(ctx context.Context, mux *runtime.ServeM
 }
 
 var (
-	pattern_ConfigWrapper_Get_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"config"}, ""))
+	pattern_ConfigWrapper_GetConfig_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"config"}, ""))
 
-	pattern_ConfigWrapper_Create_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"config"}, ""))
+	pattern_ConfigWrapper_CreateConfig_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"config"}, ""))
 
-	pattern_ConfigWrapper_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"config"}, ""))
+	pattern_ConfigWrapper_UpdateConfig_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"config"}, ""))
 
-	pattern_ConfigWrapper_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"config"}, ""))
+	pattern_ConfigWrapper_DeleteUnusedConfig_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"config"}, ""))
 )
 
 var (
-	forward_ConfigWrapper_Get_0 = runtime.ForwardResponseMessage
+	forward_ConfigWrapper_GetConfig_0 = runtime.ForwardResponseMessage
 
-	forward_ConfigWrapper_Create_0 = runtime.ForwardResponseMessage
+	forward_ConfigWrapper_CreateConfig_0 = runtime.ForwardResponseMessage
 
-	forward_ConfigWrapper_Update_0 = runtime.ForwardResponseMessage
+	forward_ConfigWrapper_UpdateConfig_0 = runtime.ForwardResponseMessage
 
-	forward_ConfigWrapper_Delete_0 = runtime.ForwardResponseMessage
+	forward_ConfigWrapper_DeleteUnusedConfig_0 = runtime.ForwardResponseMessage
 )

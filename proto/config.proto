@@ -12,8 +12,7 @@ message GetRequest{
 message GetResponse{
   string service = 1;
   int32 version = 2;
-  string key1 = 3;
-  string key2 = 4;
+  string config = 3;
 }
 
 message CreateRequest{
@@ -28,10 +27,7 @@ message Data{
   string key2 = 2;
 }
 message CreateResponse{
-  string service = 1;
-  int32 version = 2;
-  string key1 = 3;
-  string key2 = 4;
+  string message = 1;
 }
 
 message DeleteRequest{
@@ -39,10 +35,7 @@ message DeleteRequest{
   int32 version = 2;
 }
 message DeleteResponse{
-  string service = 1;
-  int32 version = 2;
-  string key1 = 3;
-  string key2 = 4;
+  string message = 1;
 }
 
 service ConfigWrapper{

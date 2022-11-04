@@ -1,7 +1,7 @@
 package server
 
 import (
-	"Config/app/proto"
+	"Config/proto"
 	"context"
 	"log"
 	"net/http"

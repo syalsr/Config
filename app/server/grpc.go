@@ -1,7 +1,7 @@
 package server
 
 import (
-	"Config/app/proto"
+	"Config/proto"
 	"log"
 	"net"
 	"sync"
@@ -18,7 +18,7 @@ func StartGrpcServer(wg *sync.WaitGroup) {
 
 	server := grpc.NewServer()
 	proto.RegisterConfigWrapperServer(server, &ConfigWrapper{})
-	log.Printf("server listening at %v", listener.Addr())
+	log.Printf("gRPC server listening at %v", listener.Addr())
 	if err := server.Serve(listener); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}

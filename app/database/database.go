@@ -20,7 +20,7 @@ func GetConnection() *Connection {
 
 func NewClient(ctx context.Context, sc *config.StorageConfig) (err error) {
 	//dsn := fmt.Sprintf("postgresql://%s:%s@%s:%s/%s", sc.Username, sc.Password, sc.Host, sc.Port, sc.Database)
-	dsn := "postgresql://postgres:postgrespw@localhost:49153/postgres"
+	dsn := "postgresql://postgres:postgrespw@localhost:49154/postgres"
 	pool, err := pgxpool.Connect(ctx, dsn)
 	if err != nil {
 		log.Fatal(err)
