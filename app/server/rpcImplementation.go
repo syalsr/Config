@@ -93,17 +93,19 @@ func (receiver *ConfigWrapper) DeleteUnusedConfig(ctx context.Context, in *proto
 	if err != nil {
 		return nil, err
 	}
-
+	log.Println("version", latest_version, in.Version, service_id)
 	if latest_version != in.Version {
 		DeleteConfig := `
 			DELETE FROM config
-			WHERE servic_id = $1 AND version = $2
+			WHERE service_id = $1 AND version = $2
 		`
-		conn.QueryRow(ctx, DeleteConfig, service_id, in.Version)
-		
+		conn.Query(ctx, DeleteConfig, service_id, in.Version)
+
+		log.Printf("Service %s, version %d has been deleted", in.Service, in.Version)
+
 		return &proto.DeleteResponse{Message: "Version has been deleted"}, nil
 	}
-
+	log.Printf("Config %s has one version", in.Service)
 	return &proto.DeleteResponse{Message: "This version in used"}, nil
 }
 
@@ -143,6 +145,8 @@ func (receiver *ConfigWrapper) UpdateConfig(ctx context.Context, in *proto.Creat
 		WHERE service_id = $2
 	`
 	conn.QueryRow(ctx, UpdateService, newVersion, service_id)
+
+	log.Printf("Update %s to %d version", in.Config.Service, newVersion)
 
 	return &proto.CreateResponse{Message: "OK"}, nil
 }

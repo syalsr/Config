@@ -13,11 +13,14 @@ import (
 
 func main() {
 	cfg := config.GetConfig()
+
 	err := database.NewClient(context.TODO(), cfg)
 	log.Println("Connected to PostgreSQL")
 	if err != nil {
 		log.Println(err)
 	}
+
+	database.Migrate()
 
 	wg := sync.WaitGroup{}
 	wg.Add(1)
