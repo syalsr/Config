@@ -12,5 +12,5 @@ clean:
 	rm proto/*.go
 
 run:
-	GOOS=linux go build -a -tags netgo -o rusprofile app/cmd/*.go
+	docker-compose up --build
 
