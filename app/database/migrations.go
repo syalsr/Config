@@ -22,7 +22,6 @@ func Migrate(sc *config.StorageConfig) {
 	fileMigrations := "file://schema"
 
 	m, err := migrate.New(fileMigrations, dsn)
-	//"postgresql://postgres:postgrespw@localhost:49157/postgres?sslmode=disable"
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -36,7 +36,7 @@ var (
 )
 
 func request_ConfigWrapper_GetConfig_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigWrapperClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetRequest
+	var protoReq RequestService
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -52,7 +52,7 @@ func request_ConfigWrapper_GetConfig_0(ctx context.Context, marshaler runtime.Ma
 }
 
 func local_request_ConfigWrapper_GetConfig_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigWrapperServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetRequest
+	var protoReq RequestService
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -68,14 +68,14 @@ func local_request_ConfigWrapper_GetConfig_0(ctx context.Context, marshaler runt
 }
 
 func request_ConfigWrapper_CreateConfig_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigWrapperClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateRequest
+	var protoReq RequestConfig
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Config); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -85,14 +85,14 @@ func request_ConfigWrapper_CreateConfig_0(ctx context.Context, marshaler runtime
 }
 
 func local_request_ConfigWrapper_CreateConfig_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigWrapperServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateRequest
+	var protoReq RequestConfig
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Config); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -102,14 +102,14 @@ func local_request_ConfigWrapper_CreateConfig_0(ctx context.Context, marshaler r
 }
 
 func request_ConfigWrapper_UpdateConfig_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigWrapperClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateRequest
+	var protoReq RequestConfig
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Config); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -119,14 +119,14 @@ func request_ConfigWrapper_UpdateConfig_0(ctx context.Context, marshaler runtime
 }
 
 func local_request_ConfigWrapper_UpdateConfig_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigWrapperServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateRequest
+	var protoReq RequestConfig
 	var metadata runtime.ServerMetadata
 
 	newReader, berr := utilities.IOReaderFactory(req.Body)
 	if berr != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Config); err != nil && err != io.EOF {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -140,7 +140,7 @@ var (
 )
 
 func request_ConfigWrapper_DeleteUnusedConfig_0(ctx context.Context, marshaler runtime.Marshaler, client ConfigWrapperClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DeleteRequest
+	var protoReq RequestService
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -156,7 +156,7 @@ func request_ConfigWrapper_DeleteUnusedConfig_0(ctx context.Context, marshaler r
 }
 
 func local_request_ConfigWrapper_DeleteUnusedConfig_0(ctx context.Context, marshaler runtime.Marshaler, server ConfigWrapperServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq DeleteRequest
+	var protoReq RequestService
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {

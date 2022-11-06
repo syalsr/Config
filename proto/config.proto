@@ -6,57 +6,45 @@ import "google/api/annotations.proto";
 
 option go_package = "Config/proto";
 
-message GetRequest{
+message RequestConfig{
   string service = 1;
-}
-message GetResponse{
-  string service = 1;
-  int32 version = 2;
-  string config = 3;
+  map<string, string> data = 2;
 }
 
-message CreateRequest{
-  DetailRequest config = 1;
-}
-message DetailRequest{
-  string service = 1;
-  repeated Data data = 2;
-}
-message Data{
-  string key1 = 1;
-  string key2 = 2;
-}
-message CreateResponse{
+message Status{
   string message = 1;
 }
 
-message DeleteRequest{
+message RequestService{
   string service = 1;
   int32 version = 2;
 }
-message DeleteResponse{
-  string message = 1;
+
+message ResponseService{
+  string service = 1;
+  int32 version = 2;
+  map<string, string> data = 3;
 }
 
 service ConfigWrapper{
-  rpc GetConfig (GetRequest) returns (GetResponse) {
+  rpc GetConfig (RequestService) returns (ResponseService) {
     option (google.api.http) = {
       get : "/config"
     };
   };
-  rpc CreateConfig (CreateRequest) returns (CreateResponse) {
+  rpc CreateConfig (RequestConfig) returns (Status) {
     option (google.api.http) = {
       post : "/config"
-      body : "config"
+      body : "*"
     };
   };
-  rpc UpdateConfig (CreateRequest) returns (CreateResponse) {
+  rpc UpdateConfig (RequestConfig) returns (Status) {
     option (google.api.http) = {
       patch : "/config"
-      body : "config"
+      body : "*"
     };
   };
-  rpc DeleteUnusedConfig (DeleteRequest) returns (DeleteResponse) {
+  rpc DeleteUnusedConfig (RequestService) returns (Status) {
     option (google.api.http) = {
       delete : "/config"
     };

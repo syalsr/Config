@@ -5,6 +5,7 @@ import (
 	"Config/proto"
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 )
 
@@ -12,10 +13,10 @@ type ConfigWrapper struct {
 	proto.UnimplementedConfigWrapperServer
 }
 
-func (receiver *ConfigWrapper) GetConfig(ctx context.Context, in *proto.GetRequest) (*proto.GetResponse, error) {
+func (receiver *ConfigWrapper) GetConfig(ctx context.Context, in *proto.RequestService) (*proto.ResponseService, error) {
 	conn := database.GetConnection().Pool
 
-	getCFG := `
+	getConfig := `
 	SELECT 
 		service.service, config.version, config.cfg, service.service_id 
 	FROM service
@@ -29,24 +30,27 @@ func (receiver *ConfigWrapper) GetConfig(ctx context.Context, in *proto.GetReque
             service.service = $1
 	`
 	result := &database.Request{}
-	err := conn.QueryRow(ctx, getCFG, in.GetService()).Scan(&result.Service, &result.Version, &result.Config, &result.ServiceID)
+	
+	err := conn.QueryRow(ctx, getConfig, in.GetService()).Scan(&result.Service, &result.Version, &result.Config, &result.ServiceID)
 	if err != nil {
 		return nil, err
 	}
 
 	log.Printf("Get config for %s", in.GetService())
 
-	return &proto.GetResponse{
-			Service: result.Service,
-			Version: int32(result.Version),
-			Config:  string(result.Config),
-		},
-		nil
+	config := make(map[string]string, 0)
+	err = json.Unmarshal(result.Config, &config)
+	if err != nil{
+		log.Println(err)
+		return nil, err
+	}
+
+	return &proto.ResponseService{Service: result.Service, Version: int32(result.Version), Data: config}, nil
 }
-func (receiver *ConfigWrapper) CreateConfig(ctx context.Context, in *proto.CreateRequest) (*proto.CreateResponse, error) {
+func (receiver *ConfigWrapper) CreateConfig(ctx context.Context, in *proto.RequestConfig) (*proto.Status, error) {
 	conn := database.GetConnection().Pool
 
-	version := int32(1)
+	firstVersion := int32(1)
 
 	insertService := `
 		INSERT INTO service 
@@ -57,7 +61,7 @@ func (receiver *ConfigWrapper) CreateConfig(ctx context.Context, in *proto.Creat
 	`
 
 	var serviceID int
-	err := conn.QueryRow(ctx, insertService, in.GetConfig().Service, version).Scan(&serviceID)
+	err := conn.QueryRow(ctx, insertService, in.Service, firstVersion).Scan(&serviceID)
 	if err != nil {
 		return nil, err
 	}
@@ -68,20 +72,18 @@ func (receiver *ConfigWrapper) CreateConfig(ctx context.Context, in *proto.Creat
 		VALUES 
 		       ($1, $2, $3) 
 	`
-	data := in.Config.GetData()
-	cfg := database.Config{Key1: data[0].Key1, Key2: data[1].Key2}
-	jsonCFG, err := json.Marshal(cfg)
+	jsonCFG, err := json.Marshal(in.Data)
 	if err != nil {
 		return nil, err
 	}
-	conn.QueryRow(ctx, insertConfig, serviceID, 1, jsonCFG)
+	fmt.Println(jsonCFG)
+	conn.QueryRow(ctx, insertConfig, serviceID, firstVersion, jsonCFG)
 
-	log.Printf("Create config for %s", in.Config.Service)
+	log.Printf("Create config for %s", in.Service)
 
-	return &proto.CreateResponse{Message: "OK"}, nil
+	return &proto.Status{Message: "OK"}, nil
 }
-
-func (receiver *ConfigWrapper) DeleteUnusedConfig(ctx context.Context, in *proto.DeleteRequest) (*proto.DeleteResponse, error) {
+func (receiver *ConfigWrapper) DeleteUnusedConfig(ctx context.Context, in *proto.RequestService) (*proto.Status, error) {
 	conn := database.GetConnection().Pool
 
 	CheckForPreviousVersion := `
@@ -104,14 +106,14 @@ func (receiver *ConfigWrapper) DeleteUnusedConfig(ctx context.Context, in *proto
 
 		log.Printf("Config for service %s version %d has been deleted", in.Service, in.Version)
 
-		return &proto.DeleteResponse{Message: "Version has been deleted"}, nil
+		return &proto.Status{Message: "Version has been deleted"}, nil
 	}
 	log.Printf("Config %s has one version or has no this version", in.Service)
-	
-	return &proto.DeleteResponse{Message: "This version in used or has no this version"}, nil
+
+	return &proto.Status{Message: "This version in used or has no this version"}, nil
 }
 
-func (receiver *ConfigWrapper) UpdateConfig(ctx context.Context, in *proto.CreateRequest) (*proto.CreateResponse, error) {
+func (receiver *ConfigWrapper) UpdateConfig(ctx context.Context, in *proto.RequestConfig) (*proto.Status, error) {
 	conn := database.GetConnection().Pool
 
 	GetServiceIdAndLatestVersion := `
@@ -119,7 +121,7 @@ func (receiver *ConfigWrapper) UpdateConfig(ctx context.Context, in *proto.Creat
 		WHERE service = $1
 	`
 	var service_id, latest_version int32
-	err := conn.QueryRow(ctx, GetServiceIdAndLatestVersion, in.Config.Service).Scan(&service_id, &latest_version)
+	err := conn.QueryRow(ctx, GetServiceIdAndLatestVersion, in.Service).Scan(&service_id, &latest_version)
 	if err != nil {
 		return nil, err
 	}
@@ -127,14 +129,13 @@ func (receiver *ConfigWrapper) UpdateConfig(ctx context.Context, in *proto.Creat
 	newVersion := latest_version + 1
 
 	InsertIntoConfig := `
-	INSERT INTO config 
-		(service_id, version, cfg) 
-	VALUES 
-	   ($1, $2, $3) 
+	INSERT INTO config
+		(service_id, version, cfg)
+	VALUES
+	   ($1, $2, $3)
 	`
-	data := in.Config.GetData()
-	cfg := database.Config{Key1: data[0].Key1, Key2: data[1].Key2}
-	jsonCFG, err := json.Marshal(cfg)
+
+	jsonCFG, err := json.Marshal(in.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +149,7 @@ func (receiver *ConfigWrapper) UpdateConfig(ctx context.Context, in *proto.Creat
 	`
 	conn.QueryRow(ctx, UpdateService, newVersion, service_id)
 
-	log.Printf("Update %s to %d version", in.Config.Service, newVersion)
+	log.Printf("Update %s to %d version", in.Service, newVersion)
 
-	return &proto.CreateResponse{Message: "OK"}, nil
+	return &proto.Status{Message: "OK"}, nil
 }
