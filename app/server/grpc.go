@@ -4,6 +4,7 @@ import (
 	"Config/proto"
 	"log"
 	"net"
+	"os"
 	"sync"
 
 	"google.golang.org/grpc"
@@ -11,7 +12,8 @@ import (
 
 func StartGrpcServer(wg *sync.WaitGroup) {
 	defer wg.Done()
-	listener, err := net.Listen("tcp", ":50051")
+	
+	listener, err := net.Listen("tcp", os.Getenv("grpcserver"))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}

@@ -20,18 +20,19 @@ func grpcGateway() error {
 
 	gtw := runtime.NewServeMux()
 
-	opts := []grpc.DialOption{grpc.WithInsecure()}
-	err := proto.RegisterConfigWrapperHandlerFromEndpoint(ctx, gtw, os.Getenv("httpserver"), opts)
+	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
+	err := proto.RegisterConfigWrapperHandlerFromEndpoint(ctx, gtw, os.Getenv("grpcserver"), opts)
 	if err != nil {
 		return err
 	}
+
 	return http.ListenAndServe(":8081", gtw)
 }
 
 func StartHppServe(wg *sync.WaitGroup) {
 	defer wg.Done()
 	conn, err := grpc.Dial(
-		os.Getenv("htppserver"),
+		os.Getenv("grpcserver"),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
@@ -42,4 +43,5 @@ func StartHppServe(wg *sync.WaitGroup) {
 	if err = grpcGateway(); err != nil {
 		log.Fatal(err)
 	}
+
 }

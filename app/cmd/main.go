@@ -20,10 +20,11 @@ func main() {
 		log.Println(err)
 	}
 
-	database.Migrate()
+	database.Migrate(cfg)
+	log.Printf("Databse migration successfully")
 
 	wg := sync.WaitGroup{}
-	wg.Add(1)
+	wg.Add(2)
 
 	go server.StartGrpcServer(&wg)
 	go server.StartHppServe(&wg)
@@ -32,9 +33,10 @@ func main() {
 }
 
 func init() {
-	//err := godotenv.Load("/app/.env")
-	err := godotenv.Load("../../.env")
+	err := godotenv.Load("/app/.env")
 	if err != nil {
 		log.Fatal(err)
 	}
+	
+	log.Printf(".env loaded")
 }

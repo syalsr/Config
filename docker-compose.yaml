@@ -5,20 +5,29 @@ services:
     build:
       context: .
       dockerfile: ./app/Dockerfile
+    command: ./config
     ports:
-      - "8080:8080"
+      - "8081:8081"
     depends_on:
       - postgres
+    networks:
+      - hosts
 
   postgres:
-    image: postgres:14.5-alpine
-    restart: always
-    hostname: postgres
+    image: 'postgres:latest'
+    container_name: postgres
+    volumes:
+      - "./migrate/up/*.up.sql:/docker-entrypoint-initdb.d/"
+
+    networks:
+      - hosts
     environment:
-      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgrespw
       - POSTGRES_DB=postgres
-      - PGUSER=postgres
-      - PGPASSWORD=postgrespw
+      - POSTGRES_USER=postgres
     ports:
       - 5432:5432
+
+networks:
+  hosts:
+    driver: "bridge"
