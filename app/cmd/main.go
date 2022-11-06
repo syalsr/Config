@@ -5,7 +5,6 @@ import (
 	"Config/app/database"
 	"Config/app/server"
 	"context"
-	"fmt"
 	"log"
 	"sync"
 
@@ -14,14 +13,18 @@ import (
 
 func main() {
 	cfg := config.GetConfig()
+
 	err := database.NewClient(context.TODO(), cfg)
 	log.Println("Connected to PostgreSQL")
 	if err != nil {
 		log.Println(err)
 	}
 
+	database.Migrate(cfg)
+	log.Printf("Databse migration successfully")
+
 	wg := sync.WaitGroup{}
-	wg.Add(1)
+	wg.Add(2)
 
 	go server.StartGrpcServer(&wg)
 	go server.StartHppServe(&wg)
@@ -31,8 +34,9 @@ func main() {
 
 func init() {
 	err := godotenv.Load("/app/.env")
-	fmt.Println(*config.GetConfig())
 	if err != nil {
 		log.Fatal(err)
 	}
+	
+	log.Printf(".env loaded")
 }

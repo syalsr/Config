@@ -1,17 +1,17 @@
 package server
 
 import (
-	"Config/app/proto"
+	"Config/proto"
 	"context"
+	"log"
+	"net/http"
+	"os"
+	"sync"
+
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
-	"log"
-	"net/http"
-	"sync"
 )
-
-const addr = "127.0.0.1:50051"
 
 func grpcGateway() error {
 	ctx := context.Background()
@@ -20,21 +20,20 @@ func grpcGateway() error {
 
 	gtw := runtime.NewServeMux()
 
-	opts := []grpc.DialOption{grpc.WithInsecure()}
-	err := proto.RegisterConfigWrapperHandlerFromEndpoint(ctx, gtw, addr, opts)
+	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
+	err := proto.RegisterConfigWrapperHandlerFromEndpoint(ctx, gtw, os.Getenv("grpcserver"), opts)
 	if err != nil {
 		return err
 	}
+
 	return http.ListenAndServe(":8081", gtw)
 }
 
 func StartHppServe(wg *sync.WaitGroup) {
 	defer wg.Done()
 	conn, err := grpc.Dial(
-		addr, grpc.WithTransportCredentials(
-			insecure.
-				NewCredentials(),
-		),
+		os.Getenv("grpcserver"),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
@@ -44,4 +43,5 @@ func StartHppServe(wg *sync.WaitGroup) {
 	if err = grpcGateway(); err != nil {
 		log.Fatal(err)
 	}
+
 }

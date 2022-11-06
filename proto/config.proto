@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package proto;
+
+import "google/api/annotations.proto";
+
+option go_package = "Config/proto";
+
+message RequestConfig{
+  string service = 1;
+  map<string, string> data = 2;
+}
+
+message Status{
+  string message = 1;
+}
+
+message RequestService{
+  string service = 1;
+  int32 version = 2;
+}
+
+message ResponseService{
+  string service = 1;
+  int32 version = 2;
+  map<string, string> data = 3;
+}
+
+service ConfigWrapper{
+  rpc GetConfig (RequestService) returns (ResponseService) {
+    option (google.api.http) = {
+      get : "/config"
+    };
+  };
+  rpc CreateConfig (RequestConfig) returns (Status) {
+    option (google.api.http) = {
+      post : "/config"
+      body : "*"
+    };
+  };
+  rpc UpdateConfig (RequestConfig) returns (Status) {
+    option (google.api.http) = {
+      patch : "/config"
+      body : "*"
+    };
+  };
+  rpc DeleteUnusedConfig (RequestService) returns (Status) {
+    option (google.api.http) = {
+      delete : "/config"
+    };
+  };
+}
