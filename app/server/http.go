@@ -25,7 +25,8 @@ func grpcGateway() error {
 	if err != nil {
 		return err
 	}
-
+	log.Println("Starting grpc gateway on :8081")
+	
 	return http.ListenAndServe(":8081", gtw)
 }
 

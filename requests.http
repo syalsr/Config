@@ -1,0 +1,34 @@
+### POST request with json body
+POST localhost:8081/config
+Content-Type: application/json
+
+{
+  "service": "tests121",
+  "data": {
+    "key1": "value1",
+    "key2": "value2",
+    "key3": "dsfsd"
+  }
+}
+
+### GET request
+GET localhost:8081/config?service=tests121
+Accept: application/json
+
+### UPDATE request with json body
+PATCH localhost:8081/config
+Content-Type: application/json
+
+{
+  "service": "tests121",
+  "data": {
+    "key1": "value1",
+    "key2": "value2",
+    "key3": "dsfsd",
+    "key4": "key"
+  }
+}
+
+### DELETE request
+DELETE localhost:8081/config?service=tests121&version=1
+Accept: application/json

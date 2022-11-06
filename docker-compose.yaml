@@ -10,24 +10,14 @@ services:
       - "8081:8081"
     depends_on:
       - postgres
-    networks:
-      - hosts
 
   postgres:
     image: 'postgres:latest'
     container_name: postgres
-    volumes:
-      - "./migrate/up/*.up.sql:/docker-entrypoint-initdb.d/"
 
-    networks:
-      - hosts
     environment:
       - POSTGRES_PASSWORD=postgrespw
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
     ports:
       - 5432:5432
-
-networks:
-  hosts:
-    driver: "bridge"
